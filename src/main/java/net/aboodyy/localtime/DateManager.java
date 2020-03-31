@@ -53,14 +53,17 @@ public class DateManager implements Listener {
 
     public String getTimeZone(Player p) {
         final String FAILED = "[LocalTime] Couldn't get " + p.getName() + "'s timezone. Will use default timezone.";
-        String timezone;
+        String timezone = TimeZone.getDefault().getID();
+
         if (timezones.containsKey(p.getUniqueId()))
             return timezones.get(p.getUniqueId());
 
         InetSocketAddress address = p.getAddress();
         if (address == null) {
             Bukkit.getLogger().info(FAILED);
-            return TimeZone.getDefault().getID();
+
+            timezones.put(p.getUniqueId(), timezone);
+            return timezone;
         }
 
         try {
@@ -69,19 +72,17 @@ public class DateManager implements Listener {
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             timezone = bufferedReader.readLine();
-
-            if (timezone.equalsIgnoreCase("undefined")) {
-                Bukkit.getLogger().info(FAILED);
-                timezone = TimeZone.getDefault().getID();
-            }
-
-            timezones.put(p.getUniqueId(), timezone);
-
-            return timezone;
         } catch (Exception e) {
             Bukkit.getLogger().info(FAILED);
-            return TimeZone.getDefault().getID();
         }
+
+        if (timezone.equalsIgnoreCase("undefined")) {
+            Bukkit.getLogger().info(FAILED);
+            timezone = TimeZone.getDefault().getID();
+        }
+
+        timezones.put(p.getUniqueId(), timezone);
+        return timezone;
     }
 
     public void clear() {
