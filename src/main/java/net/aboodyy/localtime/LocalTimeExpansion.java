@@ -31,6 +31,7 @@ import org.bukkit.event.HandlerList;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class LocalTimeExpansion extends PlaceholderExpansion implements Cacheable, Configurable {
 
     private DateManager dateManager;
