@@ -74,7 +74,7 @@ public class DateManager implements Listener {
                 String timezone;
 
                 try {
-                    URL api = new URL("https://ipapi.co/" + address.getAddress().getHostAddress() + "/timezone/");
+                    URL api = new URL("https://ipinfo.io/" + address.getAddress().getHostAddress() + "/timezone/");
                     URLConnection connection = api.openConnection();
 
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
